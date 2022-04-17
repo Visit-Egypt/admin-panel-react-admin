@@ -8,7 +8,6 @@ import {
   EditGuesser,
 } from "react-admin";
 import AuthProvider from "./authProvider";
-import jsonServerProvider from "ra-data-json-server";
 import Dashboard from "./dashboard";
 import Dataprovider from "./dataProvider";
 import themeReducer from './themeReducer';

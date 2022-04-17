@@ -14,7 +14,7 @@ import {
   NumberField,
   SearchInput,
 } from "react-admin";
-import { useMediaQuery, Theme } from "@material-ui/core";
+import { useMediaQuery, Theme } from '@mui/material';
 import { makeStyles } from "@material-ui/core/styles";
 
 // import SegmentsField from "./SegmentsField";

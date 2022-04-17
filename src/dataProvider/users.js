@@ -133,9 +133,12 @@ let dataProviderFunctions = {
   },
   update(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
+    console.log(resource,params);
+    console.log(params.data.user_role === params.previousData.user_role);
+
 
     return axios
-      .put(`${apiUrl}/api/user/${params.id}`, params.data, {
+      .put(`${apiUrl}/api/user/${params.id}`, {...params.data,user_role:params.previousData.user_role}, {
         params: {
           user_id: params.id,
         },

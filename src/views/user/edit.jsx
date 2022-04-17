@@ -17,6 +17,8 @@ import {
   TextInput,
   DateInput,
   Labeled,
+  SelectInput,
+  NumberInput,
 } from "react-admin";
 import { Box, Card, CardContent, Typography } from "@material-ui/core";
 
@@ -25,11 +27,8 @@ import FullNameField from "./FullNameField";
 // import SegmentsInput from "./SegmentsInput";
 // import { validatePasswords } from "./VisitorCreate";
 
-
-
 const UserEdit = (props) => (
-
-  <Edit {...props} title='Edit User'>
+  <Edit {...props} title="Edit User">
     <SimpleForm>
       <Box width={"100%"} display={{ md: "block", lg: "flex" }}>
         <Box flex={2} mr={{ md: 0, lg: "1em" }}>
@@ -48,14 +47,24 @@ const UserEdit = (props) => (
           <TextInput source="email" fullWidth />
           <TextInput source="photo_link" fullWidth />
           <TextInput source="phone_number" fullWidth />
+          <NumberInput source="postViews" fullWidth />
+          <NumberInput source="xp" fullWidth />
 
-          
           <Box display={{ xs: "block", sm: "flex" }}>
             <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>
               <TextInput source="id" disabled fullWidth />
             </Box>
             <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
-              <TextInput source="user_role" disabled fullWidth />
+              <SelectInput
+                source="user_role"
+                
+                fullWidth
+                choices={[
+                  { id: "SUPER_ADMIN", name: "SUPER ADMIN" },
+                  { id: "ADMIN", name: "ADMIN" },
+                  { id: "USER", name: "USER" },
+                ]}
+              />
             </Box>
           </Box>
           {/* <UserRoleInput /> */}
