@@ -1,14 +1,19 @@
-import * as React from "react";
-import Avatar from "@material-ui/core/Avatar";
-import { FieldProps } from "react-admin";
+import * as React from 'react';
+import { Avatar, SxProps } from '@mui/material';
+import { FieldProps, useRecordContext } from 'react-admin';
 
-const AvatarField = ({ record, size = "25", className }) =>
-  record ? (
-    <Avatar
-      src={`${record.photo_link}?size=${size}x${size}`}
-      style={{ width: parseInt(size, 10), height: parseInt(size, 10) }}
-      className={className}
-    />
-  ) : null;
+
+
+const AvatarField = ({ size = '25', sx }) => {
+    const record = useRecordContext();
+    if (!record) return null;
+    return (
+        <Avatar
+            src={`${record.photo_link}?size=${size}x${size}`}
+            style={{ width: parseInt(size, 10), height: parseInt(size, 10) }}
+            sx={sx}
+        />
+    );
+};
 
 export default AvatarField;

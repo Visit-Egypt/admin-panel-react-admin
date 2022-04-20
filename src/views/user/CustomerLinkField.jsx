@@ -1,18 +1,22 @@
-import * as React from 'react';
-import { Link, FieldProps } from 'react-admin';
+import * as React from "react";
+import { Link, FieldProps, useRecordContext } from "react-admin";
 
-import FullNameField from './FullNameField.jsx';
+import FullNameField from "./FullNameField.jsx";
 
-const UserLinkField = (props) =>
-    props.record ? (
-        <Link to={`/users/${props.record.id}`}>
-            <FullNameField {...props} />
-        </Link>
-    ) : null;
-
+const UserLinkField = (props) => {
+  const record = useRecordContext();
+  if (!record) {
+    return null;
+  }
+  return (
+    <Link to={`/customers/${record.id}`}>
+      <FullNameField />
+    </Link>
+  );
+};
 UserLinkField.defaultProps = {
-    source: 'id',
-    addLabel: true,
+  source: "User",
+  addLabel: true,
 };
 
 export default UserLinkField;

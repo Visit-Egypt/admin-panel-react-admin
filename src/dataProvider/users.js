@@ -4,7 +4,7 @@ import axios from "axios";
 import { HttpError } from "react-admin";
 
 let httpClient = fetchUtils.fetchJson;
-let uniqueRecordIds = new Set()
+let uniqueRecordIds = new Set();
 
 let dataProviderFunctions = {
   getList(resource, params, apiUrl) {
@@ -30,7 +30,7 @@ let dataProviderFunctions = {
           if (!uniqueRecordIds.has(user.id)) {
             uniqueRecordIds.add(user.id);
           }
-        })
+        });
         return {
           data: response.data.users,
           total: response.data.has_next
@@ -133,12 +133,9 @@ let dataProviderFunctions = {
   },
   update(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
-    console.log(resource,params);
-    console.log(params.data.user_role === params.previousData.user_role);
-
 
     return axios
-      .put(`${apiUrl}/api/user/${params.id}`, {...params.data,user_role:params.previousData.user_role}, {
+      .put(`${apiUrl}/api/user/${params.id}`, params.data, {
         params: {
           user_id: params.id,
         },
@@ -151,6 +148,35 @@ let dataProviderFunctions = {
       .then((response) => {
         return {
           data: { ...params.data, id: response.data.user_id },
+        };
+      })
+      .catch((err) => {
+        return Promise.reject(
+          new HttpError(
+            (err.response.data && err.response.data.errors[0]) || "Error",
+            err.response.data.status_code,
+            err.response.data
+          )
+        );
+      });
+  },
+  updateUserRole(resource, params, apiUrl) {
+    let userData = JSON.parse(localStorage.getItem("auth"));
+
+    return axios
+      .put(
+        `${apiUrl}/api/user/role/${params.id}?updated_user_role=${params.role}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${userData.token_type} ${userData.access_token}`,
+          },
+        }
+      )
+      .then((response) => {
+        return {
+          data: response.data,
         };
       })
       .catch((err) => {

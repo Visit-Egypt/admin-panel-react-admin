@@ -14,7 +14,7 @@ import {
   NumberField,
   SearchInput,
 } from "react-admin";
-import { useMediaQuery, Theme } from '@mui/material';
+import { useMediaQuery, Theme } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 
 // import SegmentsField from "./SegmentsField";
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const UserList = (props) => {
-  const classes = useStyles();
   const isXsmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   return (
@@ -58,17 +57,14 @@ const UserList = (props) => {
         <MobileGrid />
       ) : (
         <Datagrid optimized rowClick="edit">
-          <UserLinkField />
-          {/* <TextField source="id" /> */}
+          <UserLinkField {...props} />
           <EmailField source="email" />
           <TextField source="phone_number" />
-          {/* <TextField source="photo_link" /> */}
           <TextField source="user_role" />
         </Datagrid>
       )}
     </List>
   );
 };
-
 
 export default UserList;

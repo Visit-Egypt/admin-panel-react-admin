@@ -28,7 +28,19 @@ let dataProviderFunctions = {
           if (!uniqueRecordIds.has(place.id)) {
             uniqueRecordIds.add(place.id);
           }
+
+          if (place.placeActivities === null){
+            place.placeActivities=[]
+            
+          }
+
         });
+
+
+
+        
+
+        console.log(response.data.places);
         return {
           data: response.data.places,
           total: response.data.has_next

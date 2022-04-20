@@ -10,6 +10,8 @@ import {
   NumberInput,
   ReferenceInput,
   SelectInput,
+  BooleanField,
+  BooleanInput,
 } from "react-admin";
 import { Field } from "react-final-form";
 
@@ -32,6 +34,19 @@ const UserEdit = (props) => {
         <ArrayInput source="image_urls">
           <SimpleFormIterator>
             <TextInput source="" />
+          </SimpleFormIterator>
+        </ArrayInput>
+        <ArrayInput source="placeActivities">
+          <SimpleFormIterator>
+            {/* <TextInput source="id" /> */}
+            <NumberInput source="xp" />
+            <BooleanInput source="customXp" />
+            <NumberInput source="type" />
+            <TextInput source="title" />
+            <TextInput source="description" />
+            <TextInput source="duration" />
+            <NumberInput source="maxProgress" />
+
           </SimpleFormIterator>
         </ArrayInput>
         {/* <NumberInput source="ticket_prices.Foreigner Adult" /> */}
