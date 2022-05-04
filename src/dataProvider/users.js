@@ -24,7 +24,6 @@ let dataProviderFunctions = {
         },
       })
       .then((response) => {
-        // console.log(uniqueRecordCount);
         // uniqueRecordCount += 1;
         response.data.users.map((user) => {
           if (!uniqueRecordIds.has(user.id)) {
@@ -48,38 +47,79 @@ let dataProviderFunctions = {
         );
       });
   },
-  getOne(resource, params, apiUrl) {
+  async getOne(resource, params, apiUrl) {
+    let userData = JSON.parse(localStorage.getItem("auth"));
+    if (params.id) {
+      return axios
+        .get(`${apiUrl}/api/user`, {
+          params: {
+            user_id: params.id,
+            user_email: params.email,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${userData.token_type} ${userData.access_token}`,
+          },
+        })
+        .then((response) => {
+          return {
+            data: response.data,
+          };
+        })
+        .catch((err) => {
+          return Promise.reject(
+            new HttpError(
+              (err.response.data && err.response.data.errors[0]) || "Error",
+              err.response.data.status_code,
+              err.response.data
+            )
+          );
+        });
+    } else {
+      let ResolvedRequests = await Promise.all(
+        params.ids.map((id) => {
+          return axios
+            .get(`${apiUrl}/api/user`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `${userData.token_type} ${userData.access_token}`,
+              },
+              params: {
+                user_id: id,
+              },
+            })
+            .then((response) => {
+              return response.data;
+            });
+        })
+      );
+      return { data: ResolvedRequests };
+    }
+  },
+  async getMany(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
 
-    return axios
-      .get(`${apiUrl}/api/user`, {
-        params: {
-          user_id: params.id,
-          user_email: params.email,
-        },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${userData.token_type} ${userData.access_token}`,
-        },
+    let ResolvedRequests = await Promise.all(
+      params.ids.map((id) => {
+        return axios
+          .get(`${apiUrl}/api/user`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${userData.token_type} ${userData.access_token}`,
+            },
+            params: {
+              user_id: id,
+            },
+          })
+          .then((response) => {
+            return response.data;
+          });
       })
-      .then((response) => {
-        return {
-          data: response.data,
-        };
-      })
-      .catch((err) => {
-        return Promise.reject(
-          new HttpError(
-            (err.response.data && err.response.data.errors[0]) || "Error",
-            err.response.data.status_code,
-            err.response.data
-          )
-        );
-      });
+    );
+    return { data: ResolvedRequests };
   },
   delete(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
-    // console.log('lashdlasjhdlk');
     return axios
       .delete(`${apiUrl}/api/user/${params.id}`, {
         headers: {
@@ -188,6 +228,9 @@ let dataProviderFunctions = {
           )
         );
       });
+  },
+  async getManyReference(resource, params, apiUrl) {
+    let userData = JSON.parse(localStorage.getItem("auth"));
   },
 };
 

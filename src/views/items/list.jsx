@@ -3,37 +3,18 @@ import * as React from "react";
 import {
   List,
   Datagrid,
-  TextField,
-  EmailField,
-  ArrayField,
-  ChipField,
-  SingleFieldList,
-  ImageField,
   ReferenceField,
   TopToolbar,
   CreateButton,
   ExportButton,
-  ListActions,
-  Button,
-  FilterButton,
   useRecordContext,
 } from "react-admin";
-
+import TitleWithThumbnail from "../../components/TitleWithThumbnail";
 
 const ListAction = (props) => (
   <TopToolbar>
-    {/* <FilterButton /> */}
     <CreateButton />
     <ExportButton />
-    {/* Add your custom actions */}
-    {/* <Button
-      onClick={() => {
-        alert("Your custom action");
-      }}
-      label="Show calendar"
-    >
-      <IconEvent />
-    </Button> */}
   </TopToolbar>
 );
 
@@ -52,20 +33,10 @@ const ImagePreviewField = (props) => {
 const UserList = (props) => (
   <List {...props} actions={<ListAction />} bulkActionButtons={false}>
     <Datagrid rowClick="edit">
-      <TextField source="title" />
-      <TextField source="short_description" />
-      <TextFieldSmall source="long_description" />
-      {/* <ImageField source="default_image"  /> */}
-      {/* <TextField source="list_of_images" /> */}
-      {/* <ArrayField source="list_of_images">
-        <SingleFieldList>
-          <TextField source="" />
-        </SingleFieldList>
-      </ArrayField> */}
+      <TitleWithThumbnail size="75" />
       <ReferenceField source="place_id" reference="places">
-        <TextField source="title" />
+        <TitleWithThumbnail size="75" />
       </ReferenceField>
-      {/* <TextField source="id" disabled /> */}
     </Datagrid>
   </List>
 );

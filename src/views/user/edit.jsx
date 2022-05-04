@@ -11,10 +11,11 @@ import {
   NumberInput,
   useRecordContext,
   useRefresh,
+  WithRecord,
 } from "react-admin";
 import { Grid, Box, Card, CardContent } from "@mui/material";
 
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -87,6 +88,9 @@ const Aside = (props) => {
 };
 
 const UserEdit = (props) => {
+  let userData = JSON.parse(localStorage.getItem("auth"));
+  let userID = userData.user_id;
+
   return (
     <>
       <Edit {...props} title="Edit User" aside={<Aside />}>
@@ -96,34 +100,38 @@ const UserEdit = (props) => {
               <Box display={{ xs: "block", sm: "flex" }}>
                 <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>
                   <TextInput
+                    disabled
                     source="first_name"
                     validate={[required()]}
                     fullWidth
                   />
+                  {/* <WithRecord
+                    label="First Name"
+                    render={(record) => (
+                      <TextInput
+                        disabled={record.id !== userID}
+                        record={record}
+                        source="first_name"
+                        validate={[required()]}
+                        fullWidth
+                      />
+                    )}
+                  /> */}
                 </Box>
                 <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
                   <TextInput
+                    disabled
                     source="last_name"
                     validate={[required()]}
                     fullWidth
                   />
                 </Box>
               </Box>
-              <TextInput source="email" fullWidth />
-              <TextInput source="photo_link" fullWidth />
-              <TextInput source="phone_number" fullWidth />
-              <NumberInput source="postViews" fullWidth />
-              <NumberInput source="xp" fullWidth />
-
-              {/* <Box display={{ xs: "block", sm: "flex" }}>
-                <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>
-                  <NumberInput source="profileFrame.id" fullWidth />
-                </Box>
-                <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
-                  <NumberInput source="profileFrame.type" fullWidth />
-                </Box>
-              </Box>
-              <TextInput source="profileFrame.imgUrl" fullWidth /> */}
+              <TextInput disabled source="email" fullWidth />
+              <TextInput disabled source="photo_link" fullWidth />
+              <TextInput disabled source="phone_number" fullWidth />
+              <NumberInput disabled source="postViews" fullWidth />
+              <NumberInput disabled source="xp" fullWidth />
 
               <Box display={{ xs: "block", sm: "flex" }}>
                 <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>

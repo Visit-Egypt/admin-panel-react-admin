@@ -9,9 +9,10 @@ import {
   ChipField,
   SingleFieldList,
   ImageField,
-  NumberField
+  NumberField,
 } from "react-admin";
 import { useRecordContext } from "react-admin";
+import TitleWithThumbnail from "../../components/TitleWithThumbnail";
 
 const TextFieldSmall = (props) => {
   const { source } = props;
@@ -28,25 +29,13 @@ const ImagePreviewField = (props) => {
 const UserList = (props) => (
   <List {...props} bulkActionButtons={false}>
     <Datagrid rowClick="edit">
-      <TextField source="title" />
-      <TextField source="short_description" />
-      {/* <TextFieldSmall source="long_description" /> */}
-      <TextField source="location_description" />
-      {/* <NumberField source="longitude" /> */}
-      {/* <NumberField source="latitude" /> */}
-      {/* <TextField source="image_urls" /> */}
-      {/* <TextField source="default_image" /> */}
+      <TitleWithThumbnail size="75" />
+
+
       <TextField source="category" />
       <TextField source="city" />
       <TextField source="opening_hours" />
-      {/* <NumberField source="ticket_prices.Foreigner Adult" /> */}
-      {/* <DateField source="views" /> */}
-      {/* <ArrayField source="reviews">
-        <SingleFieldList>
-          <ChipField source="rating" />
-        </SingleFieldList>
-      </ArrayField> */}
-      {/* <TextField source="id" /> */}
+
     </Datagrid>
   </List>
 );

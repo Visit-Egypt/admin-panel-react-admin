@@ -33,6 +33,8 @@ import BadgeEdit from "./views/badges/edit";
 import BadgeCreate from "./views/badges/create";
 import BadgeShow from "./views/places/show";
 
+import Layout from './layout'
+
 import decodeJwt from "jwt-decode";
 
 const dataProviderInstance = Dataprovider("https://visit-egypt.herokuapp.com");
@@ -48,16 +50,17 @@ const App = () => {
     if (Date.now() / 1000 > decodedToken.exp) {
       localStorage.removeItem("auth");
     }
-    // console.log(decodedToken);
+    // (decodedToken);
   };
   checkForAuthExpiration();
   return (
     <Admin
+    layout={Layout}
       dataProvider={dataProviderInstance}
       authProvider={AuthProvider}
-      dashboard={Dashboard}
+      // dashboard={Dashboard}
       customReducers={{ theme: themeReducer }}
-
+      disableTelemetry
     >
       <Resource
         name="users"
@@ -69,21 +72,21 @@ const App = () => {
       <Resource
         name="items"
         list={ItemList}
-        show={ItemShow}
+        // show={ItemShow}
         edit={ItemEdit}
         create={ItemCreate}
       />
       <Resource
         name="places"
         list={placeList}
-        show={PlaceShow}
+        // show={PlaceShow}
         edit={placeEdit}
         create={placeCreate}
       />
       <Resource
         name="badges"
         list={BadgeList}
-        show={ShowGuesser}
+        // show={ShowGuesser}
         edit={BadgeEdit}
         create={BadgeCreate}
       />

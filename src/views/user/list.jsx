@@ -17,34 +17,17 @@ import {
 import { useMediaQuery, Theme } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 
-// import SegmentsField from "./SegmentsField";
-// import SegmentInput from "./SegmentInput";
-import UserLinkField from "./CustomerLinkField";
-// import ColoredNumberField from "./ColoredNumberField";
-import MobileGrid from "./MobileGrid";
-// import VisitorListAside from "./VisitorListAside";
+import UserLinkField from "./show/CustomerLinkField";
+import MobileGrid from "./show/MobileGrid";
+import { useEffect } from "react";
 
-// const visitorFilters = [
-//   <SearchInput source="q" alwaysOn />,
-//   <DateInput source="last_seen_gte" />,
-//   <NullableBooleanInput source="has_ordered" />,
-//   <NullableBooleanInput source="has_newsletter" defaultValue />,
-//   <SegmentInput />,
-// ];
-
-const useStyles = makeStyles((theme) => ({
-  nb_commands: { color: "purple" },
-  hiddenOnSmallScreens: {
-    display: "table-cell",
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
-  },
-}));
 
 const UserList = (props) => {
   const isXsmall = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+
+
   return (
     <List
       {...props}
@@ -53,7 +36,7 @@ const UserList = (props) => {
       perPage={25}
       // aside={<VisitorListAside />}
     >
-      {isXsmall ? (
+      {isSmall ? (
         <MobileGrid />
       ) : (
         <Datagrid optimized rowClick="edit">

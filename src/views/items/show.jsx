@@ -18,7 +18,6 @@ import {
 const LogField = (props) => {
   const { source } = props;
   const record = useRecordContext(props);
-  // console.log(record);
   // return <span>{record[source]}</span>;
 };
 

@@ -1,26 +1,28 @@
 // in src/users.js
 import * as React from "react";
-import { List, Datagrid, TextField, EmailField, ReferenceField, NumberField, ArrayField, SingleFieldList, ChipField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  TextField,
+  ReferenceField,
+  NumberField,
+
+} from "react-admin";
+import TitleWithThumbnail from "../../components/TitleWithThumbnail";
 
 const UserList = (props) => (
   <List {...props}>
     <Datagrid rowClick="edit">
-      <TextField source="title" />
+      <TitleWithThumbnail thumbnailSource='img_url' />
       {/* <TextField source="img_url" /> */}
       <TextField source="city" />
       <ReferenceField source="place_id" reference="places">
-        <TextField source="title" />
+        <TitleWithThumbnail size="75" />
       </ReferenceField>
       <NumberField source="max_progress" />
       <TextField source="type" />
       <NumberField source="xp" />
-      {/* <TextField source="description" /> */}
-      {/* <ArrayField source="badge_tasks">
-        <SingleFieldList>
-          <ChipField source="imgUrl" />
-        </SingleFieldList>
-      </ArrayField> */}
-      {/* <TextField source="id" /> */}
+
     </Datagrid>
   </List>
 );

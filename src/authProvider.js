@@ -24,7 +24,6 @@ function refreshToken() {
       }
     )
     .then((response) => {
-      // console.log(response);
       localStorage.setItem("auth", JSON.stringify(response.data));
     });
 }

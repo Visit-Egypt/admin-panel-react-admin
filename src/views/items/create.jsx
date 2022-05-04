@@ -26,11 +26,7 @@ const UserList = (props) => (
           <TextInput source="" />
         </SimpleFormIterator>
       </ArrayInput>
-      
-      {/* <ReferenceInput source="place_id" reference="places">
-        <SelectInput optionText="id" />
-      </ReferenceInput> */}
-      {/* <TextInput source="id" disabled /> */}
+
     </SimpleForm>
   </Create>
 );

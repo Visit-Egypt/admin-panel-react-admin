@@ -18,8 +18,7 @@ import {
 const LogField = (props) => {
   const { source } = props;
   const record = useRecordContext(props);
-  // console.log(record);
-  // return <span>{record[source]}</span>;
+
 };
 
 const PlaceShow = (props) => (
@@ -31,7 +30,6 @@ const PlaceShow = (props) => (
       <TextField source="location_description" />
       <NumberField source="longitude" />
       <NumberField source="latitude" />
-      {/* <TextField source="image_urls" /> */}
       <ArrayField source="image_urls">
         <Datagrid>
           <FunctionField render={(record) => `${record}`} />;
@@ -43,8 +41,7 @@ const PlaceShow = (props) => (
       <NumberField source="ticket_prices.Foreigner Adult" />
       <TextField source="category" />
       <NumberField source="views" />
-      {/* <TextField source="explores" /> */}
-      {/* <TextField source="placeActivities" /> */}
+
       <ArrayField source="reviews">
         <Datagrid>
           <NumberField source="rating" />

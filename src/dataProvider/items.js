@@ -157,10 +157,8 @@ let dataProviderFunctions = {
       });
   },
   getManyReference(resource, params, apiUrl){
-    // console.log(resource, params);
   },
   getMany(resource, params, apiUrl){
-    // console.log(resource, params);
   }
 };
 

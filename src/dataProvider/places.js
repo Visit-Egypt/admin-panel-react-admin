@@ -24,25 +24,23 @@ let dataProviderFunctions = {
         },
       })
       .then((response) => {
-        response.data.places.map((place) => {
+        let ValidatedData = response.data.places.map((place) => {
+          // count the unique records for pagination
           if (!uniqueRecordIds.has(place.id)) {
             uniqueRecordIds.add(place.id);
           }
 
-          if (place.placeActivities === null){
-            place.placeActivities=[]
-            
+          return {
+            ...place,
+            placeActivities : place.placeActivities ? place.placeActivities : [],
+            ticket_prices : place.ticket_prices ? place.ticket_prices : {},
           }
-
+          
         });
 
-
-
-        
-
-        console.log(response.data.places);
+        // (ValidatedData);
         return {
-          data: response.data.places,
+          data: ValidatedData,
           total: response.data.has_next
             ? uniqueRecordIds.size + perPage
             : uniqueRecordIds.size,
@@ -60,7 +58,6 @@ let dataProviderFunctions = {
   },
   async getOne(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
-    // console.log(resource, params);
     if (params.id) {
       return axios
         .get(`${apiUrl}/api/place/${params.id}`, {
@@ -71,7 +68,11 @@ let dataProviderFunctions = {
         })
         .then((response) => {
           return {
-            data: response.data,
+            data: {
+              ...response.data,
+              placeActivities : response.data.placeActivities ? response.data.placeActivities : [],
+              ticket_prices : response.data.ticket_prices ? response.data.ticket_prices : {},
+            },
           };
         })
         .catch((err) => {
@@ -84,7 +85,29 @@ let dataProviderFunctions = {
           );
         });
     } else if (params.ids) {
-      let ResolvedRequests = await Promise.all(params.ids.map((id) => {
+      let ResolvedRequests = await Promise.all(
+        params.ids.map((id) => {
+          return axios
+            .get(`${apiUrl}/api/place/${id}`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `${userData.token_type} ${userData.access_token}`,
+              },
+            })
+            .then((response) => {
+              return response.data;
+            });
+        })
+      );
+      // (ResolvedRequests);
+      return { data: ResolvedRequests };
+    }
+  },
+  async getMany(resource, params, apiUrl) {
+    console.log(params);
+    let userData = JSON.parse(localStorage.getItem("auth"));
+    let ResolvedRequests = await Promise.all(
+      params.ids.map((id) => {
         return axios
           .get(`${apiUrl}/api/place/${id}`, {
             headers: {
@@ -95,10 +118,10 @@ let dataProviderFunctions = {
           .then((response) => {
             return response.data;
           });
-      }))
-      // console.log(ResolvedRequests);
-      return {data:ResolvedRequests}
-    }
+      })
+    );
+    // (ResolvedRequests);
+    return { data: ResolvedRequests };
   },
   delete(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
@@ -176,11 +199,8 @@ let dataProviderFunctions = {
       });
   },
   getManyReference(resource, params, apiUrl) {
-    // console.log(resource, params);
   },
-  getMany(resource, params, apiUrl) {
-    // console.log(resource, params);
-  },
+
 };
 
 export default dataProviderFunctions;

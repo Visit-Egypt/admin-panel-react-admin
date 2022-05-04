@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, FieldProps, useRecordContext } from "react-admin";
+import { Link, useRecordContext } from "react-admin";
 
 import FullNameField from "./FullNameField.jsx";
 

@@ -1,29 +1,8 @@
 import * as React from "react";
 import { Field } from "react-final-form";
 
-import {
-  EditProps,
-  NullableBooleanInput,
-  PasswordInput,
-  Toolbar,
-  useTranslate,
-  FormWithRedirect,
-  required,
-  email,
-  FieldProps,
-  SimpleForm,
-  Edit,
-  TextInput,
-  DateInput,
-  Labeled,
-  Create,
-} from "react-admin";
-import { Box, Card, CardContent, Typography } from "@material-ui/core";
-
-// import Aside from "./Aside";
-import FullNameField from "./FullNameField";
-// import SegmentsInput from "./SegmentsInput";
-// import { validatePasswords } from "./VisitorCreate";
+import { required, SimpleForm, TextInput, Create } from "react-admin";
+import { Box } from "@material-ui/core";
 
 const UserList = (props) => (
   <Create {...props}>
@@ -46,14 +25,11 @@ const UserList = (props) => (
           <TextInput source="photo_link" fullWidth />
           <TextInput source="phone_number" fullWidth />
 
-          <TextInput source="password"  fullWidth />
+          <TextInput source="password" fullWidth />
 
-          {/* <UserRoleInput /> */}
         </Box>
       </Box>
-      {/* <ReferenceInput source="userId" reference="users">
-        <SelectInput optionText="name" />
-      </ReferenceInput> */}
+
     </SimpleForm>
   </Create>
 );

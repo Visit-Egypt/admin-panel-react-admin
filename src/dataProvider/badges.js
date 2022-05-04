@@ -48,7 +48,6 @@ let dataProviderFunctions = {
   },
   getOne(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
-
     return axios
       .get(`${apiUrl}/api/badge`, {
         params: {
@@ -64,7 +63,6 @@ let dataProviderFunctions = {
         },
       })
       .then((response) => {
-        // console.log(response);
         return {
           data: response.data.badges[0],
         };
@@ -78,6 +76,34 @@ let dataProviderFunctions = {
           )
         );
       });
+  },
+  async getMany(resource, params, apiUrl) {
+    let userData = JSON.parse(localStorage.getItem("auth"));
+
+    let ResolvedRequests = await Promise.all(
+      params.ids.map((id) => {
+        return axios
+          .get(`${apiUrl}/api/badge`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${userData.token_type} ${userData.access_token}`,
+            },
+            params: {
+              page_num: 1,
+              limit: 1,
+              filters: {
+                id: params.id,
+              },
+            },
+          })
+          .then((response) => {
+            return response.data.badges[0];
+          });
+      })
+    );
+    console.log(ResolvedRequests);
+
+    return { data: ResolvedRequests };
   },
   delete(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
