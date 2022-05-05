@@ -5,12 +5,14 @@ import usersDataProvider from "./users";
 import itemsDataProvider from "./items";
 import placesDataProvider from "./places";
 import badgesDataProvider from "./badges";
+import tagsDataProvider from "./tags";
 
 let resourselist = {
   users: usersDataProvider,
   items: itemsDataProvider,
   places: placesDataProvider,
   badges: badgesDataProvider,
+  tags: tagsDataProvider,
 };
 
 export default (
@@ -25,7 +27,7 @@ export default (
     resourselist[resource].getOne(resource, params, apiUrl),
 
   getMany: (resource, params) => {
-    console.log(resource,params);
+    console.log(resource, params);
     return resourselist[resource].getMany(resource, params, apiUrl);
   },
 

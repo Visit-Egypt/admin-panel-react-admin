@@ -10,8 +10,7 @@ import {
 import AuthProvider from "./authProvider";
 import Dashboard from "./dashboard";
 import Dataprovider from "./dataProvider";
-import themeReducer from './themeReducer';
-
+import themeReducer from "./themeReducer";
 
 import UserList from "./views/user/list";
 import UserEdit from "./views/user/edit";
@@ -33,7 +32,12 @@ import BadgeEdit from "./views/badges/edit";
 import BadgeCreate from "./views/badges/create";
 import BadgeShow from "./views/places/show";
 
-import Layout from './layout'
+import tagsViews from "./views/tags";
+import { AiFillTag } from "react-icons/ai";
+import { BiBadge } from "react-icons/bi";
+import { FaPlaceOfWorship } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
+// import Layout from './layout'
 
 import decodeJwt from "jwt-decode";
 
@@ -55,7 +59,7 @@ const App = () => {
   checkForAuthExpiration();
   return (
     <Admin
-    layout={Layout}
+      // layout={Layout}
       dataProvider={dataProviderInstance}
       authProvider={AuthProvider}
       // dashboard={Dashboard}
@@ -68,6 +72,7 @@ const App = () => {
         show={UserShow}
         edit={UserEdit}
         create={UserCreate}
+        icon={FaUsers}
       />
       <Resource
         name="items"
@@ -82,6 +87,7 @@ const App = () => {
         // show={PlaceShow}
         edit={placeEdit}
         create={placeCreate}
+        icon={FaPlaceOfWorship}
       />
       <Resource
         name="badges"
@@ -89,7 +95,10 @@ const App = () => {
         // show={ShowGuesser}
         edit={BadgeEdit}
         create={BadgeCreate}
+        icon={BiBadge}
       />
+
+      <Resource name="tags" {...tagsViews} icon={AiFillTag} />
     </Admin>
   );
 };
