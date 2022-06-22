@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Field } from "react-final-form";
 
 import { required, SimpleForm, TextInput, Create } from "react-admin";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 
 const UserList = (props) => (
   <Create {...props}>

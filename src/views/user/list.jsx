@@ -15,7 +15,6 @@ import {
   SearchInput,
 } from "react-admin";
 import { useMediaQuery, Theme } from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
 
 import UserLinkField from "./show/CustomerLinkField";
 import MobileGrid from "./show/MobileGrid";

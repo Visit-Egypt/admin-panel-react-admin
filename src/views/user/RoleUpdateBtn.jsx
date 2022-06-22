@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { useInput, FieldTitle, InputProps } from 'ra-core';
-import { TextFieldProps } from '@material-ui/core/TextField';
 
 import ResettableTextField from './ResettableTextField';
 import InputHelperText from './InputHelperText';
