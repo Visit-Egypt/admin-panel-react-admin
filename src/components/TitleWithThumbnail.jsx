@@ -56,6 +56,6 @@ const Thumbnail = ({ size = '75', sx,source = 'default_image' }) => {
             sx={sx}
         />
     );
-};
+}; 
 
 export default TitleWithThumbnail
