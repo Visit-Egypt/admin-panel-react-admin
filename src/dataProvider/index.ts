@@ -53,7 +53,7 @@ export default (
       : defaultDataProvider.getOne(resource, params),
 
   getMany: (resource: any, params: any) => {
-    console.log(resource, params);
+    // console.log(resource, params);
     return resourselist[resource]
       ? resourselist[resource].getMany(resource, params, apiUrl)
       : defaultDataProvider.getMany(resource, params);
