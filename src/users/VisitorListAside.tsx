@@ -1,38 +1,38 @@
-import * as React from 'react';
-import { Card, CardContent } from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOnOutlined';
-import MailIcon from '@mui/icons-material/MailOutline';
-import LocalOfferIcon from '@mui/icons-material/LocalOfferOutlined';
-import { FilterList, FilterListItem, FilterLiveSearch } from 'react-admin';
+import * as React from "react";
+import { Card, CardContent } from "@mui/material";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOnOutlined";
+import MailIcon from "@mui/icons-material/MailOutline";
+import LocalOfferIcon from "@mui/icons-material/LocalOfferOutlined";
+import { FilterList, FilterListItem, FilterLiveSearch } from "react-admin";
 import {
-    endOfYesterday,
-    startOfWeek,
-    subWeeks,
-    startOfMonth,
-    subMonths,
-} from 'date-fns';
+  endOfYesterday,
+  startOfWeek,
+  subWeeks,
+  startOfMonth,
+  subMonths,
+} from "date-fns";
 
-import segments from '../segments/data';
+import segments from "../segments/data";
 
 const Aside = () => (
-    <Card
-        sx={{
-            display: {
-                xs: 'none',
-                md: 'block',
-            },
-            order: -1,
-            flex: '0 0 15em',
-            mr: 2,
-            mt: 8,
-            alignSelf: 'flex-start',
-        }}
-    >
-        <CardContent sx={{ pt: 1 }}>
-            <FilterLiveSearch />
+  <Card
+    sx={{
+      display: {
+        xs: "none",
+        md: "block",
+      },
+      order: -1,
+      flex: "0 0 15em",
+      mr: 2,
+      mt: 8,
+      alignSelf: "flex-start",
+    }}
+  >
+    <CardContent sx={{ pt: 1 }}>
+      {/* <FilterLiveSearch /> */}
 
-            <FilterList
+      {/* <FilterList
                 label="resources.customers.filters.last_visited"
                 icon={<AccessTimeIcon />}
             >
@@ -87,9 +87,9 @@ const Aside = () => (
                         ).toISOString(),
                     }}
                 />
-            </FilterList>
+            </FilterList> */}
 
-            <FilterList
+      {/* <FilterList
                 label="resources.customers.filters.has_ordered"
                 icon={<MonetizationOnIcon />}
             >
@@ -107,8 +107,8 @@ const Aside = () => (
                         nb_commands_lte: 0,
                     }}
                 />
-            </FilterList>
-
+            </FilterList> */}
+      {/* 
             <FilterList
                 label="resources.customers.filters.has_newsletter"
                 icon={<MailIcon />}
@@ -121,22 +121,27 @@ const Aside = () => (
                     label="ra.boolean.false"
                     value={{ has_newsletter: false }}
                 />
-            </FilterList>
+            </FilterList> */}
 
-            <FilterList
-                label="resources.customers.filters.group"
-                icon={<LocalOfferIcon />}
-            >
-                {segments.map(segment => (
-                    <FilterListItem
-                        label={segment.name}
-                        key={segment.id}
-                        value={{ groups: segment.id }}
-                    />
-                ))}
-            </FilterList>
-        </CardContent>
-    </Card>
+      <FilterList label="Permission" icon={<LocalOfferIcon />}>
+        <FilterListItem
+          label={"ADMIN"}
+          key={"ADMIN"}
+          value={{ user_role: "ADMIN" }}
+        />
+        <FilterListItem
+          label={"USER"}
+          key={"USER"}
+          value={{ user_role: "USER" }}
+        />
+        <FilterListItem
+          label={"SUPER_ADMIN"}
+          key={"SUPER_ADMIN"}
+          value={{ user_role: "SUPER_ADMIN" }}
+        />
+      </FilterList>
+    </CardContent>
+  </Card>
 );
 
 export default Aside;
