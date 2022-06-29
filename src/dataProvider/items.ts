@@ -1,16 +1,14 @@
 import { stringify } from "query-string";
 import { fetchUtils, DataProvider } from "ra-core";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { HttpError } from "react-admin";
-
-let httpClient = fetchUtils.fetchJson;
-let uniqueRecordIds = new Set();
+import { Item, ItemsPageResponse } from "./../types";
 
 let dataProviderFunctions = {
-  getList(resource, params, apiUrl) {
+  getList(resource: string, params: any, apiUrl: string) {
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
-    let userData = JSON.parse(localStorage.getItem("auth"));
+    let userData = JSON.parse(localStorage.getItem("auth") as string);
 
     return axios
       .get(`${apiUrl}/api/item`, {
@@ -23,17 +21,10 @@ let dataProviderFunctions = {
           Authorization: `${userData.token_type} ${userData.access_token}`,
         },
       })
-      .then((response) => {
-        response.data.items.map((item) => {
-          if (!uniqueRecordIds.has(item.id)) {
-            uniqueRecordIds.add(item.id);
-          }
-        });
+      .then((response: AxiosResponse<ItemsPageResponse>) => {
         return {
           data: response.data.items,
-          total: response.data.has_next
-            ? uniqueRecordIds.size + perPage
-            : uniqueRecordIds.size,
+          total: response.data.content_range,
         };
       })
       .catch((err) => {
@@ -46,8 +37,8 @@ let dataProviderFunctions = {
         );
       });
   },
-  getOne(resource, params, apiUrl) {
-    let userData = JSON.parse(localStorage.getItem("auth"));
+  getOne(resource: string, params: any, apiUrl: string) {
+    let userData = JSON.parse(localStorage.getItem("auth") as string);
 
     return axios
       .get(`${apiUrl}/api/item`, {
@@ -63,12 +54,9 @@ let dataProviderFunctions = {
           Authorization: `${userData.token_type} ${userData.access_token}`,
         },
       })
-      .then((response) => {
-        // let item = response.data.items.find((item) => {
-        //   return item.id === params.id;
-        // });
+      .then((response: AxiosResponse<ItemsPageResponse>) => {
         return {
-          data: response.data.items[0],
+          data: response.data.items ? response.data.items[0] : null,
         };
       })
       .catch((err) => {
@@ -81,8 +69,8 @@ let dataProviderFunctions = {
         );
       });
   },
-  delete(resource, params, apiUrl) {
-    let userData = JSON.parse(localStorage.getItem("auth"));
+  delete(resource: string, params: any, apiUrl: string) {
+    let userData = JSON.parse(localStorage.getItem("auth") as string);
 
     return axios
       .delete(`${apiUrl}/api/item/${params.id}`, {
@@ -91,7 +79,7 @@ let dataProviderFunctions = {
           Authorization: `${userData.token_type} ${userData.access_token}`,
         },
       })
-      .then((response) => {
+      .then((response: AxiosResponse<Item>) => {
         return {
           data: response.data,
         };
@@ -106,8 +94,8 @@ let dataProviderFunctions = {
         );
       });
   },
-  create(resource, params, apiUrl) {
-    let userData = JSON.parse(localStorage.getItem("auth"));
+  create(resource: string, params: any, apiUrl: string) {
+    let userData = JSON.parse(localStorage.getItem("auth") as string);
 
     return axios
       .post(`${apiUrl}/api/item`, params.data, {
@@ -116,9 +104,9 @@ let dataProviderFunctions = {
           Authorization: `${userData.token_type} ${userData.access_token}`,
         },
       })
-      .then((response) => {
+      .then((response: AxiosResponse<Item>) => {
         return {
-          data: { ...params.data, id: response.data.item_id },
+          data: response.data,
         };
       })
       .catch((err) => {
@@ -131,8 +119,8 @@ let dataProviderFunctions = {
         );
       });
   },
-  update(resource, params, apiUrl) {
-    let userData = JSON.parse(localStorage.getItem("auth"));
+  update(resource: string, params: any, apiUrl: string) {
+    let userData = JSON.parse(localStorage.getItem("auth") as string);
 
     return axios
       .put(`${apiUrl}/api/item/${params.id}`, params.data, {
@@ -141,9 +129,9 @@ let dataProviderFunctions = {
           Authorization: `${userData.token_type} ${userData.access_token}`,
         },
       })
-      .then((response) => {
+      .then((response: AxiosResponse<Item>) => {
         return {
-          data: { ...params.data, id: response.data.item_id },
+          data: response.data,
         };
       })
       .catch((err) => {
@@ -156,10 +144,8 @@ let dataProviderFunctions = {
         );
       });
   },
-  getManyReference(resource, params, apiUrl){
-  },
-  getMany(resource, params, apiUrl){
-  }
+  getManyReference(resource: string, params: any, apiUrl: string) {},
+  getMany(resource: string, params: any, apiUrl: string) {},
 };
 
 export default dataProviderFunctions;
