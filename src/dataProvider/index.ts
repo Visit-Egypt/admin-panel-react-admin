@@ -40,7 +40,6 @@ export default (
   _countHeader = "Content-Range"
 ) => ({
   getList: (resource: any, params: any) => {
-    console.log(resource, params);
     
     return resourselist[resource]
       ? resourselist[resource].getList(resource, params, apiUrl)
@@ -53,7 +52,6 @@ export default (
       : defaultDataProvider.getOne(resource, params),
 
   getMany: (resource: any, params: any) => {
-    // console.log(resource, params);
     return resourselist[resource]
       ? resourselist[resource].getMany(resource, params, apiUrl)
       : defaultDataProvider.getMany(resource, params);

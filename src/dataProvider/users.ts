@@ -6,6 +6,12 @@ import { User, UsersPageResponse } from "../types";
 
 let dataProviderFunctions = {
   async getList(resource: string, params: any, apiUrl: string) {
+    console.log(params);
+    console.log(Object.entries(params.filter).map(([key, value]) => {
+      return {[key]:value};
+    }));
+    
+
     try {
       const { page, perPage } = params.pagination;
       let userData = JSON.parse(localStorage.getItem("auth") as string);
@@ -15,6 +21,10 @@ let dataProviderFunctions = {
           params: {
             page_num: page,
             limit: perPage,
+            // filters: Object.entries(params.filter).map(([key, value]) => {
+            //   return {[key]:value};
+            // }),
+            filters: params.filter,
           },
           headers: {
             "Content-Type": "application/json",
@@ -23,12 +33,12 @@ let dataProviderFunctions = {
         }
       );
       console.log(response);
-
       return {
         data: response.data.users,
         total: response.data.content_range,
       };
     } catch (error: any) {
+      console.log(error);
       return Promise.reject(
         new HttpError(
           error.response.data?.errors[0] || "Error",
@@ -55,7 +65,6 @@ let dataProviderFunctions = {
           },
         }
       );
-      console.log(response);
 
       return {
         data: response.data,
@@ -91,7 +100,6 @@ let dataProviderFunctions = {
             });
         })
       );
-      console.log(response);
 
       return { data: response };
     } catch (error: any) {
@@ -117,7 +125,6 @@ let dataProviderFunctions = {
           },
         }
       );
-      console.log(response);
 
       return {
         data: response.data,
@@ -149,7 +156,6 @@ let dataProviderFunctions = {
           },
         }
       );
-      console.log(response);
 
       return {
         data: { ...params.data, ...response.data },

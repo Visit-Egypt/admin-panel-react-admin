@@ -104,7 +104,6 @@ let dataProviderFunctions = {
     }
   },
   async getMany(resource, params, apiUrl) {
-    console.log(params);
     let userData = JSON.parse(localStorage.getItem("auth"));
     let ResolvedRequests = await Promise.all(
       params.ids.map((id) => {

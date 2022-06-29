@@ -101,7 +101,6 @@ let dataProviderFunctions = {
           });
       })
     );
-    console.log(ResolvedRequests);
 
     return { data: ResolvedRequests };
   },
