@@ -6,14 +6,30 @@ import {
   TextField,
   ReferenceField,
   NumberField,
-
+  TextInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
 import TitleWithThumbnail from "../components/TitleWithThumbnail";
 
+const Filters = [
+  <TextInput label="Title" source="title" variant="outlined" />,
+  <TextInput label="type" source="type" variant="outlined" />,
+  <ReferenceInput
+    label="Place"
+    source="place_id"
+    reference="places"
+    variant="outlined"
+  >
+    <SelectInput optionText="title" />
+  </ReferenceInput>,
+
+];
+
 const UserList = (props) => (
-  <List {...props}>
+  <List {...props} filters={Filters}>
     <Datagrid rowClick="edit">
-      <TitleWithThumbnail thumbnailSource='img_url' />
+      <TitleWithThumbnail thumbnailSource="img_url" />
       {/* <TextField source="img_url" /> */}
       <TextField source="city" />
       <ReferenceField source="place_id" reference="places">
@@ -22,7 +38,6 @@ const UserList = (props) => (
       <NumberField source="max_progress" />
       <TextField source="type" />
       <NumberField source="xp" />
-
     </Datagrid>
   </List>
 );

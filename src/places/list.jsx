@@ -10,9 +10,29 @@ import {
   SingleFieldList,
   ImageField,
   NumberField,
+  ReferenceInput,
+  TextInput,
+  SelectInput,
 } from "react-admin";
 import { useRecordContext } from "react-admin";
 import TitleWithThumbnail from "../components/TitleWithThumbnail";
+
+const Filters = [
+  <TextInput label="Title" source="title" variant="outlined" />,
+  <TextInput label="city" source="city" variant="outlined" />,
+  <TextInput label="category" source="category" variant="outlined" />,
+
+  // <TextInput label="Last name" source="last_name" variant="outlined" />,
+  // <SelectInput
+  //   source="user_role"
+  //   // translateChoice
+  //   choices={[
+  //     { id: "ADMIN", name: "ADMIN" },
+  //     { id: "USER", name: "USER" },
+  //     { id: "SUPER_ADMIN", name: "SUPER_ADMIN" },
+  //   ]}
+  // />,
+];
 
 const TextFieldSmall = (props) => {
   const { source } = props;
@@ -27,15 +47,13 @@ const ImagePreviewField = (props) => {
 };
 
 const UserList = (props) => (
-  <List {...props} bulkActionButtons={false}>
+  <List {...props} bulkActionButtons={false} filters={Filters}>
     <Datagrid rowClick="edit">
       <TitleWithThumbnail size="75" />
-
 
       <TextField source="category" />
       <TextField source="city" />
       <TextField source="opening_hours" />
-
     </Datagrid>
   </List>
 );

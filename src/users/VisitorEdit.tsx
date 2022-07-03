@@ -23,22 +23,21 @@ import {
   CardContent,
   Select,
   MenuItem,
-  Button
+  Button,
 } from "@mui/material";
-import UserDataProvider from '../dataProvider/users'
+import UserDataProvider from "../dataProvider/users";
 
 // import Aside from "./Aside";
 import FullNameField from "./FullNameField";
-import SegmentsInput from "./SegmentsInput";
 
-const Aside = (props:any) => {
+const Aside = (props: any) => {
   const record = useRecordContext();
   let [Role, setRole] = React.useState(record.user_role);
   let refreshRecord = useRefresh();
-  let handleChange = (params : any) => {
+  let handleChange = (params: any) => {
     setRole(params.target.value);
   };
-  let updateRole = async (params :any) => {
+  let updateRole = async (params: any) => {
     let responce = await UserDataProvider.updateUserRole(
       "users",
       { id: record.id, role: Role },
@@ -100,12 +99,11 @@ const VisitorEdit = () => {
   const translate = useTranslate();
   return (
     <Edit title={<VisitorTitle />} aside={<Aside />}>
-      <SimpleForm >
+      <SimpleForm>
         <Box width={"100%"} display={{ md: "block", lg: "flex" }}>
           <Box flex={2} mr={{ md: 0, lg: "1em" }}>
             <Box display={{ xs: "block", sm: "flex" }}>
               <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>
-
                 <TextInput
                   disabled
                   source="first_name"
@@ -160,6 +158,7 @@ const VisitorEdit = () => {
 
             {/* <UserRoleInput /> */}
           </Box>
+
         </Box>
       </SimpleForm>
     </Edit>

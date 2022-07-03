@@ -17,6 +17,8 @@ let dataProviderFunctions = {
         params: {
           page_num: page,
           limit: perPage,
+          filters: params.filter,
+
         },
         headers: {
           "Content-Type": "application/json",
@@ -47,6 +49,12 @@ let dataProviderFunctions = {
         };
       })
       .catch((err) => {
+        if (err.response.status === 404) {
+          return {
+            data: [],
+            total: 0,
+          };
+        }
         return Promise.reject(
           new HttpError(
             (err.response.data && err.response.data.errors[0]) || "Error",

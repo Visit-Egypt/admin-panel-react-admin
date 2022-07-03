@@ -50,58 +50,6 @@ const Menu = ({ dense = false }: MenuProps) => {
       }}
     >
       <DashboardMenuItem />
-      {/* <SubMenu
-                handleToggle={() => handleToggle('menuSales')}
-                isOpen={state.menuSales}
-                name="pos.menu.sales"
-                icon={<orders.icon />}
-                dense={dense}
-            >
-                <MenuItemLink
-                    to="/commands"
-                    state={{ _scrollToTop: true }}
-                    primaryText={translate(`resources.commands.name`, {
-                        smart_count: 2,
-                    })}
-                    leftIcon={<orders.icon />}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to="/invoices"
-                    state={{ _scrollToTop: true }}
-                    primaryText={translate(`resources.invoices.name`, {
-                        smart_count: 2,
-                    })}
-                    leftIcon={<invoices.icon />}
-                    dense={dense}
-                />
-            </SubMenu> */}
-      {/* <SubMenu
-                handleToggle={() => handleToggle('menuCatalog')}
-                isOpen={state.menuCatalog}
-                name="pos.menu.catalog"
-                icon={<products.icon />}
-                dense={dense}
-            >
-                <MenuItemLink
-                    to="/products"
-                    state={{ _scrollToTop: true }}
-                    primaryText={translate(`resources.products.name`, {
-                        smart_count: 2,
-                    })}
-                    leftIcon={<products.icon />}
-                    dense={dense}
-                />
-                <MenuItemLink
-                    to="/categories"
-                    state={{ _scrollToTop: true }}
-                    primaryText={translate(`resources.categories.name`, {
-                        smart_count: 2,
-                    })}
-                    leftIcon={<categories.icon />}
-                    dense={dense}
-                />
-            </SubMenu> */}
 
       <SubMenu
         handleToggle={() => handleToggle("menuCustomers")}
@@ -117,13 +65,7 @@ const Menu = ({ dense = false }: MenuProps) => {
           leftIcon={<visitors.icon />}
           dense={dense}
         />
-        <MenuItemLink
-          to="/tags"
-          state={{ _scrollToTop: true }}
-          primaryText="tags"
-          leftIcon={<tags.icon />}
-          dense={dense}
-        />
+
         <MenuItemLink
           to="/items"
           state={{ _scrollToTop: true }}
@@ -143,6 +85,13 @@ const Menu = ({ dense = false }: MenuProps) => {
           state={{ _scrollToTop: true }}
           primaryText="badges"
           leftIcon={<badges.icon />}
+          dense={dense}
+        />
+        <MenuItemLink
+          to="/tags"
+          state={{ _scrollToTop: true }}
+          primaryText="tags"
+          leftIcon={<tags.icon />}
           dense={dense}
         />
       </SubMenu>

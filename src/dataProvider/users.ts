@@ -7,10 +7,11 @@ import { User, UsersPageResponse } from "../types";
 let dataProviderFunctions = {
   async getList(resource: string, params: any, apiUrl: string) {
     console.log(params);
-    console.log(Object.entries(params.filter).map(([key, value]) => {
-      return {[key]:value};
-    }));
-    
+    console.log(
+      Object.entries(params.filter).map(([key, value]) => {
+        return { [key]: value };
+      })
+    );
 
     try {
       const { page, perPage } = params.pagination;
@@ -39,6 +40,13 @@ let dataProviderFunctions = {
       };
     } catch (error: any) {
       console.log(error);
+      if (error.response.status === 404) {
+        return {
+          data: [],
+          total: 0,
+        };
+      }
+
       return Promise.reject(
         new HttpError(
           error.response.data?.errors[0] || "Error",

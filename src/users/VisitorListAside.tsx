@@ -4,7 +4,14 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOnOutlined";
 import MailIcon from "@mui/icons-material/MailOutline";
 import LocalOfferIcon from "@mui/icons-material/LocalOfferOutlined";
-import { FilterList, FilterListItem, FilterLiveSearch } from "react-admin";
+import {
+  FilterList,
+  FilterListItem,
+  FilterLiveSearch,
+  FilterFormInput,
+  Filter,
+  TextInput,
+} from "react-admin";
 import {
   endOfYesterday,
   startOfWeek,
@@ -30,98 +37,21 @@ const Aside = () => (
     }}
   >
     <CardContent sx={{ pt: 1 }}>
-      {/* <FilterLiveSearch /> */}
+      {/* @ts-ignore */}
+      {/* <FilterLiveSearch source="email" title="email" variant="outlined" /> */}
+      {/* <FilterFormInput  ></FilterFormInput> */}
 
-      {/* <FilterList
-                label="resources.customers.filters.last_visited"
-                icon={<AccessTimeIcon />}
-            >
-                <FilterListItem
-                    label="resources.customers.filters.today"
-                    value={{
-                        last_seen_gte: endOfYesterday().toISOString(),
-                        last_seen_lte: undefined,
-                    }}
-                />
-                <FilterListItem
-                    label="resources.customers.filters.this_week"
-                    value={{
-                        last_seen_gte: startOfWeek(new Date()).toISOString(),
-                        last_seen_lte: undefined,
-                    }}
-                />
-                <FilterListItem
-                    label="resources.customers.filters.last_week"
-                    value={{
-                        last_seen_gte: subWeeks(
-                            startOfWeek(new Date()),
-                            1
-                        ).toISOString(),
-                        last_seen_lte: startOfWeek(new Date()).toISOString(),
-                    }}
-                />
-                <FilterListItem
-                    label="resources.customers.filters.this_month"
-                    value={{
-                        last_seen_gte: startOfMonth(new Date()).toISOString(),
-                        last_seen_lte: undefined,
-                    }}
-                />
-                <FilterListItem
-                    label="resources.customers.filters.last_month"
-                    value={{
-                        last_seen_gte: subMonths(
-                            startOfMonth(new Date()),
-                            1
-                        ).toISOString(),
-                        last_seen_lte: startOfMonth(new Date()).toISOString(),
-                    }}
-                />
-                <FilterListItem
-                    label="resources.customers.filters.earlier"
-                    value={{
-                        last_seen_gte: undefined,
-                        last_seen_lte: subMonths(
-                            startOfMonth(new Date()),
-                            1
-                        ).toISOString(),
-                    }}
-                />
-            </FilterList> */}
+      <Filter >
+        <TextInput label="Email" source="email" variant="outlined" alwaysOn />
+      </Filter>
 
-      {/* <FilterList
-                label="resources.customers.filters.has_ordered"
-                icon={<MonetizationOnIcon />}
-            >
-                <FilterListItem
-                    label="ra.boolean.true"
-                    value={{
-                        nb_commands_gte: 1,
-                        nb_commands_lte: undefined,
-                    }}
-                />
-                <FilterListItem
-                    label="ra.boolean.false"
-                    value={{
-                        nb_commands_gte: undefined,
-                        nb_commands_lte: 0,
-                    }}
-                />
-            </FilterList> */}
-      {/* 
-            <FilterList
-                label="resources.customers.filters.has_newsletter"
-                icon={<MailIcon />}
-            >
-                <FilterListItem
-                    label="ra.boolean.true"
-                    value={{ has_newsletter: true }}
-                />
-                <FilterListItem
-                    label="ra.boolean.false"
-                    value={{ has_newsletter: false }}
-                />
-            </FilterList> */}
+      <Filter >
+        <TextInput label="First name" source="first_name" variant="outlined" alwaysOn />
+      </Filter>
+
+      <Filter >
+        <TextInput label="Last name" source="last_name" variant="outlined" alwaysOn />
+      </Filter>
 
       <FilterList label="Permission" icon={<LocalOfferIcon />}>
         <FilterListItem

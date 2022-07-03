@@ -13,7 +13,6 @@ import {
 import AvatarField from "./AvatarField";
 import Avatar from "@mui/material/Avatar";
 import ColoredNumberField from "./ColoredNumberField";
-import SegmentsField from "./SegmentsField";
 import { Customer } from "../types";
 
 const MobileGrid = () => {
@@ -90,7 +89,7 @@ const MobileGrid = () => {
                   mb: 1,
                 }}
               >
-                <Box
+                {/* <Box
                   sx={{
                     px: { xs: 2, xl: 4 },
                   }}
@@ -117,7 +116,7 @@ const MobileGrid = () => {
                   >
                     photos
                   </Box>
-                </Box>
+                </Box> */}
                 <Box
                   sx={{
                     px: { xs: 2, xl: 4 },
@@ -177,11 +176,10 @@ const MobileGrid = () => {
               </Box>
             </CardContent>
             {record.groups && record.groups.length > 0 && (
-              <CardContent sx={{ pt: 0 }}>
-                <SegmentsField />
-              </CardContent>
+              <CardContent sx={{ pt: 0 }}></CardContent>
             )}
           </Card>
+
         </RecordContextProvider>
       ))}
     </Box>

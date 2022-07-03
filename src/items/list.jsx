@@ -8,6 +8,9 @@ import {
   CreateButton,
   ExportButton,
   useRecordContext,
+  TextInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
 import TitleWithThumbnail from "../components/TitleWithThumbnail";
 
@@ -15,8 +18,21 @@ const ListAction = (props) => (
   <TopToolbar>
     <CreateButton />
     <ExportButton />
+    
   </TopToolbar>
 );
+const Filters = [
+  <TextInput label="Title" source="title" variant="outlined" />,
+  <ReferenceInput
+    label="Place"
+    source="place_id"
+    reference="places"
+    variant="outlined"
+  >
+    <SelectInput optionText="title" />
+  </ReferenceInput>,
+
+];
 
 const TextFieldSmall = (props) => {
   const { source } = props;
@@ -31,7 +47,12 @@ const ImagePreviewField = (props) => {
 };
 
 const UserList = (props) => (
-  <List {...props} actions={<ListAction />} bulkActionButtons={false}>
+  <List
+    {...props}
+    // actions={<ListAction />}
+    bulkActionButtons={false}
+    filters={Filters}
+  >
     <Datagrid rowClick="edit">
       <TitleWithThumbnail size="75" />
       <ReferenceField source="place_id" reference="places">
