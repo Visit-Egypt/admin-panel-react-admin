@@ -13,6 +13,10 @@ import {
   ReferenceInput,
   TextInput,
   SelectInput,
+  ReferenceField,
+  ReferenceArrayField,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
 import { useRecordContext } from "react-admin";
 import TitleWithThumbnail from "../components/TitleWithThumbnail";
@@ -20,7 +24,9 @@ import TitleWithThumbnail from "../components/TitleWithThumbnail";
 const Filters = [
   <TextInput label="Title" source="title" variant="outlined" />,
   <TextInput label="city" source="city" variant="outlined" />,
-  <TextInput label="category" source="category" variant="outlined" />,
+  <ReferenceArrayInput source="category" reference="tags" fullWidth>
+    <SelectArrayInput optionText="name" fullWidth />
+  </ReferenceArrayInput>,
 
   // <TextInput label="Last name" source="last_name" variant="outlined" />,
   // <SelectInput
@@ -51,7 +57,6 @@ const UserList = (props) => (
     <Datagrid rowClick="edit">
       <TitleWithThumbnail size="75" />
 
-      <TextField source="category" />
       <TextField source="city" />
       <TextField source="opening_hours" />
     </Datagrid>
