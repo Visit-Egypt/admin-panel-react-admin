@@ -7,16 +7,14 @@ import {
   ArrayInput,
   SimpleFormIterator,
   NumberInput,
-
   BooleanInput,
   required,
   useRecordContext,
   FormDataConsumer,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
-import {
-  Box,
-  Avatar,
-} from "@mui/material";
+import { Box, Avatar } from "@mui/material";
 import CollapsibleCard from "../components/collapsibleCard";
 
 const Thumbnail = ({ size = "75", sx, img, source }) => {
@@ -34,7 +32,6 @@ const Thumbnail = ({ size = "75", sx, img, source }) => {
 };
 
 const UserEdit = (props) => {
-
   return (
     <Edit {...props} mutationMode="undoable">
       <SimpleForm sx={{ marginBottom: "100px" }}>
@@ -60,8 +57,16 @@ const UserEdit = (props) => {
                 <TextInput fullWidth source="city" />
               </Box>
               <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
-                <TextInput fullWidth source="category" />
+                {/* <TextInput fullWidth source="category" /> */}
+                <ReferenceArrayInput
+                  source="category"
+                  reference="tags"
+                  fullWidth
+                >
+                  <SelectArrayInput optionText="name" fullWidth />
+                </ReferenceArrayInput>
               </Box>
+
               <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
                 <NumberInput fullWidth source="views" />
               </Box>
@@ -223,7 +228,7 @@ const UserEdit = (props) => {
 
         {/* reviews */}
 
-        <CollapsibleCard title='Reviews' >
+        <CollapsibleCard title="Reviews">
           <ArrayInput source="reviews" fullWidth>
             <SimpleFormIterator disableAdd>
               <FormDataConsumer>

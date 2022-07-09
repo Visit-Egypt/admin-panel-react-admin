@@ -65,15 +65,7 @@ const App = () => {
         name="tags"
          {...tags}
       />
-      {/* <Resource
-                name="commands"
-                {...orders}
-                options={{ label: 'Orders' }}
-            /> */}
-      {/* <Resource name="invoices" {...invoices} /> */}
-      {/* <Resource name="products" {...products} /> */}
-      {/* <Resource name="categories" {...categories} /> */}
-      {/* <Resource name="reviews" {...reviews} /> */}
+
     </Admin>
   );
 };
