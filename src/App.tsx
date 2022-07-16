@@ -14,6 +14,7 @@ import tags from "./tags";
 import places from "./places";
 import badges from "./badges";
 import items from "./items";
+import notifications from "./notifications";
 
 import dataProvider from "./dataProvider";
 
@@ -34,7 +35,7 @@ const App = () => {
       title=""
       dataProvider={dataProviderInstance}
       authProvider={authProvider}
-      dashboard={Dashboard}
+      // dashboard={Dashboard}
       loginPage={Login}
       layout={Layout}
       i18nProvider={i18nProvider}
@@ -45,27 +46,12 @@ const App = () => {
                 <Route path="/configuration" element={<Configuration />} />
                 <Route path="/segments" element={<Segments />} />
             </CustomRoutes> */}
-      <Resource
-        name="users"
-         {...visitors}
-      />
-            <Resource
-        name="items"
-         {...items}
-      />
-            <Resource
-        name="places"
-         {...places}
-      />
-            <Resource
-        name="badges"
-         {...badges}
-      />
-            <Resource
-        name="tags"
-         {...tags}
-      />
-
+      <Resource name="users" {...visitors} />
+      <Resource name="items" {...items} />
+      <Resource name="places" {...places} />
+      <Resource name="badges" {...badges} />
+      <Resource name="tags" {...tags} />
+      <Resource name="notifications" {...notifications} />
     </Admin>
   );
 };

@@ -7,6 +7,7 @@ import itemsDataProvider from "./items";
 import placesDataProvider from "./places";
 import badgesDataProvider from "./badges";
 import tagsDataProvider from "./tags";
+import notificationsDataProvider from "./notifications";
 
 const defaultDataProvider: DataProvider = {
   // @ts-ignore
@@ -30,6 +31,7 @@ let resourselist: any = {
   places: placesDataProvider,
   badges: badgesDataProvider,
   tags: tagsDataProvider,
+  notifications: notificationsDataProvider,
   default: defaultDataProvider,
 };
 

@@ -6,13 +6,13 @@ import {
   TextField,
 } from "react-admin";
 
-const UserList = (props) => (
+const tagsList = (props) => (
   <List {...props}>
-    <Datagrid rowClick="edit">
+    <Datagrid rowClick="edit" bulkActionButtons={false}>
       <TextField source="name" />
       <TextField source="description" />
     </Datagrid>
   </List>
 );
 
-export default UserList;
+export default tagsList;

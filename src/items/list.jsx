@@ -53,7 +53,7 @@ const UserList = (props) => (
     bulkActionButtons={false}
     filters={Filters}
   >
-    <Datagrid rowClick="edit">
+    <Datagrid rowClick="edit" bulkActionButtons={false}>
       <TitleWithThumbnail size="75" />
       <ReferenceField source="place_id" reference="places">
         <TitleWithThumbnail size="75" />

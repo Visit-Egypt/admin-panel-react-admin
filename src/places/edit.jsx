@@ -138,7 +138,22 @@ const UserEdit = (props) => {
                             label="Title"
                           />
                         </Box>
-                        <Box flex={1} ml={{ xs: 0, sm: "0.5em" }}>
+                        <Box flex={0.5} mr={{ xs: 0, sm: "0.5em" }}>
+                          <TextInput
+                            source={getSource("id")}
+                            record={scopedFormData}
+                            fullWidth
+                            label="ID"
+                            defaultValue={(() => {
+                              const dateString = Date.now().toString(36);
+                              const randomness = Math.random()
+                                .toString(36)
+                                .substr(2);
+                              return dateString + randomness;
+                            })()}
+                          />
+                        </Box>
+                        <Box flex={0.5} ml={{ xs: 0, sm: "0.5em" }}>
                           <TextInput
                             source={getSource("duration")}
                             record={scopedFormData}
@@ -186,6 +201,101 @@ const UserEdit = (props) => {
                         record={scopedFormData}
                         label="Custom XP"
                       />
+                    </>
+                  );
+                }}
+              </FormDataConsumer>
+            </SimpleFormIterator>
+          </ArrayInput>
+        </CollapsibleCard>
+
+        {/* explorees */}
+        <CollapsibleCard title="Explores">
+          <ArrayInput source="explores">
+            <SimpleFormIterator>
+              <FormDataConsumer>
+                {({ formData, getSource, scopedFormData }) => {
+                  // getSource("").slice(0, -1) returns an extra . at the end so we slice it off to get the right value
+                  return (
+                    <>
+                      <Box display={{ xs: "block", sm: "flex", width: "100%" }}>
+                        <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>
+                          <TextInput
+                            source={getSource("title")}
+                            record={scopedFormData}
+                            fullWidth
+                            label="Title"
+                          />
+                        </Box>
+                        <Box flex={0.5} mr={{ xs: 0, sm: "0.5em" }}>
+                          <TextInput
+                            source={getSource("id")}
+                            record={scopedFormData}
+                            fullWidth
+                            label="ID"
+                            defaultValue={(() => {
+                              const dateString = Date.now().toString(36);
+                              const randomness = Math.random()
+                                .toString(36)
+                                .substr(2);
+                              return dateString + randomness;
+                            })()}
+                          />
+                        </Box>
+                        <Box flex={0.5} ml={{ xs: 0, sm: "0.5em" }}>
+                          <NumberInput
+                            source={getSource("xp")}
+                            record={scopedFormData}
+                            fullWidth
+                            label="XP"
+                          />
+                        </Box>
+                      </Box>
+
+                      <TextInput
+                        source={getSource("imageUrl")}
+                        record={scopedFormData}
+                        multiline
+                        fullWidth
+                        label="imageUrl"
+                      />
+                      <ArrayInput
+                        source={getSource("hints")}
+                        record={scopedFormData}
+                      >
+                        <SimpleFormIterator>
+                          <FormDataConsumer>
+                            {({ getSource, scopedFormData }) => {
+                              return (
+                                <Box
+                                  display={{
+                                    xs: "block",
+                                    sm: "flex",
+                                    width: "100%",
+                                  }}
+                                >
+                                  <Box flex={0.5} mr={{ xs: 0, sm: "0.5em" }}>
+                                    <TextInput
+                                      source={getSource("hint")}
+                                      fullWidth
+                                      label="hint"
+                                      record={scopedFormData}
+                                    />
+                                  </Box>
+                                  <Box flex={1} mr={{ xs: 0, sm: "0.5em" }}>
+                                    <TextInput
+                                      source={getSource("imageUrl")}
+                                      fullWidth
+                                      label="imageUrl"
+                                      record={scopedFormData}
+                                    />
+                                  </Box>
+                                </Box>
+                              );
+                            }}
+                          </FormDataConsumer>
+                        </SimpleFormIterator>
+                      </ArrayInput>
                     </>
                   );
                 }}

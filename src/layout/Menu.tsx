@@ -11,6 +11,8 @@ import {
   useSidebarState,
 } from "react-admin";
 
+import { Button } from "@mui/material";
+
 import visitors from "../users";
 import tags from "../tags";
 import places from "../places";
@@ -18,15 +20,16 @@ import badges from "../badges";
 import items from "../items";
 
 import { BiMenu } from "react-icons/bi";
+import { GrNotification } from "react-icons/gr";
 
 import SubMenu from "./SubMenu";
 
-type MenuName = "menuCatalog" | "menuSales" | "menuCustomers";
+type MenuName = "menuCatalog" | "menuCustomers" | "menuNotifications";
 
 const Menu = ({ dense = false }: MenuProps) => {
   const [state, setState] = useState({
     menuCatalog: true,
-    menuSales: true,
+    menuNotifications: false,
     menuCustomers: true,
   });
   const translate = useTranslate();
@@ -49,7 +52,7 @@ const Menu = ({ dense = false }: MenuProps) => {
           }),
       }}
     >
-      <DashboardMenuItem />
+      {/* <DashboardMenuItem /> */}
 
       <SubMenu
         handleToggle={() => handleToggle("menuCustomers")}
@@ -92,6 +95,13 @@ const Menu = ({ dense = false }: MenuProps) => {
           state={{ _scrollToTop: true }}
           primaryText="tags"
           leftIcon={<tags.icon />}
+          dense={dense}
+        />
+        <MenuItemLink
+          to="/notifications"
+          state={{ _scrollToTop: true }}
+          primaryText="notifications"
+          leftIcon={<GrNotification />}
           dense={dense}
         />
       </SubMenu>

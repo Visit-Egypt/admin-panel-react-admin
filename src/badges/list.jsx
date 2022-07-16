@@ -28,7 +28,7 @@ const Filters = [
 
 const UserList = (props) => (
   <List {...props} filters={Filters}>
-    <Datagrid rowClick="edit">
+    <Datagrid rowClick="edit" bulkActionButtons={false}>
       <TitleWithThumbnail thumbnailSource="img_url" />
       {/* <TextField source="img_url" /> */}
       <TextField source="city" />

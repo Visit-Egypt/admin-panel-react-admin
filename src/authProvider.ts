@@ -42,10 +42,8 @@ const authProvider: AuthProvider = {
     if (!auth) return Promise.reject();
     let token = JSON.parse(auth as string).access_token;
     const decodedToken: any = jwt_decode(token);
-    console.log(decodedToken);
     // compare expiration timestamp to date, if expired, return false
     if (decodedToken.exp < new Date().getTime() / 1000) {
-      console.log("Token expired");
       localStorage.removeItem("auth");
       return Promise.reject();
       // return false;
@@ -53,13 +51,20 @@ const authProvider: AuthProvider = {
 
     return Promise.resolve();
   },
-  getPermissions: () => Promise.reject("Unknown method"),
+  getPermissions: () => {
+    const auth = localStorage.getItem("auth");
+    if (!auth) return Promise.reject();
+    let token = JSON.parse(auth as string).access_token;
+    const decodedToken: any = jwt_decode(token);
+
+    return Promise.resolve(decodedToken.role)
+
+  },
   getIdentity: async () => {
     const auth = localStorage.getItem("auth");
     if (!auth) return Promise.reject();
     let token = JSON.parse(auth as string).access_token;
     const decodedToken: any = jwt_decode(token);
-    console.log(decodedToken);
 
     let response: AxiosResponse<User> = await axios.get(
       `https://visit-egypt.herokuapp.com/api/user`,
@@ -75,7 +80,6 @@ const authProvider: AuthProvider = {
         },
       }
     );
-    console.log(response);
     // fetch and encode image as base64
     let imageBase64;
     // try {
@@ -89,7 +93,6 @@ const authProvider: AuthProvider = {
     //     )
     //   );
     // } catch (error) {
-    //   console.log(error);
     // }
 
     return Promise.resolve({

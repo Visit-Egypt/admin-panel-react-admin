@@ -1,41 +1,30 @@
-import { stringify } from "query-string";
-import { fetchUtils, DataProvider } from "ra-core";
 import axios from "axios";
 import { HttpError } from "react-admin";
-
-let httpClient = fetchUtils.fetchJson;
-let uniqueRecordIds = new Set();
 
 let dataProviderFunctions = {
   getList(resource, params, apiUrl) {
     const { page, perPage } = params.pagination;
-    const { field, order } = params.sort;
     let userData = JSON.parse(localStorage.getItem("auth"));
 
     return axios
-      .get(`${apiUrl}/api/badge`, {
-        params: {
-          page_num: page,
-          limit: perPage,
-          filters: params.filter,
+    .get(`${apiUrl}/api/badge`, {
+      params: {
+        page_num: page,
+        limit: perPage,
+        filters: params.filter,
+        
+      },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${userData.token_type} ${userData.access_token}`,
+      },
+    })
+    .then((response) => {
+        console.log(response);
 
-        },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${userData.token_type} ${userData.access_token}`,
-        },
-      })
-      .then((response) => {
-        response.data.badges.map((badge) => {
-          if (!uniqueRecordIds.has(badge.id)) {
-            uniqueRecordIds.add(badge.id);
-          }
-        });
         return {
           data: response.data.badges,
-          total: response.data.has_next
-            ? uniqueRecordIds.size + perPage
-            : uniqueRecordIds.size,
+          total: response.data.content_range,
         };
       })
       .catch((err) => {

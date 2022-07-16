@@ -54,8 +54,8 @@ const ImagePreviewField = (props) => {
 
 const UserList = (props) => (
   <List {...props} bulkActionButtons={false} filters={Filters}>
-    <Datagrid rowClick="edit">
-      <TitleWithThumbnail size="75" />
+    <Datagrid rowClick="edit" bulkActionButtons={false}>
+      <TitleWithThumbnail   size="75" />
 
       <TextField source="city" />
       <TextField source="opening_hours" />

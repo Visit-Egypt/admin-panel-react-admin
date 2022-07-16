@@ -6,15 +6,14 @@ import { HttpError } from "react-admin";
 let dataProviderFunctions = {
   getList(resource, params, apiUrl) {
     const { page, perPage } = params.pagination;
-    const { field, order } = params.sort;
     let userData = JSON.parse(localStorage.getItem("auth"));
 
     return axios
-      .get(`${apiUrl}/api/place`, {
+      .get(`${apiUrl}/api/notification`, {
         params: {
           page_num: page,
           limit: perPage,
-          filters: params.filter,
+          lang: "en",
         },
         headers: {
           "Content-Type": "application/json",
@@ -22,19 +21,15 @@ let dataProviderFunctions = {
         },
       })
       .then((response) => {
-        // (ValidatedData);
         return {
-          data: response.data.places,
+          data: response.data.notifications.map((item, index) => ({
+            ...item,
+            id: index,
+          })),
           total: response.data.content_range,
         };
       })
       .catch((err) => {
-        if (err.response.status === 404) {
-          return {
-            data: [],
-            total: 0,
-          };
-        }
         return Promise.reject(
           new HttpError(
             (err.response.data && err.response.data.errors[0]) || "Error",
@@ -44,96 +39,66 @@ let dataProviderFunctions = {
         );
       });
   },
-  async getOne(resource, params, apiUrl) {
+  getOne(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
-    if (params.id) {
-      return axios
-        .get(`${apiUrl}/api/place/${params.id}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `${userData.token_type} ${userData.access_token}`,
+    return axios
+      .get(`${apiUrl}/api/notification`, {
+        params: {
+          filters: {
+            id: params.id,
           },
-        })
-        .then((response) => {
-          return {
-            data: {
-              ...response.data,
-              placeActivities: response.data.placeActivities
-                ? response.data.placeActivities
-                : [],
-              ticket_prices: response.data.ticket_prices
-                ? response.data.ticket_prices
-                : {
-                    "Foreigner Adult": 0,
-                    "Foreigner Student": 0,
-                    "Foreigner Adult Personal Photography": 0,
-                    "Foreigner Adult Personal Video": 0,
-                    "Egyptian Adult": 0,
-                    "Egyptian Student": 0,
-                    "Egyptian Personal Photography": 0,
-                    "Egyptian Personal Video": 0,
-                    "Children Under 6 Years": 0,
-                  },
-            },
-          };
-        })
-        .catch((err) => {
-          return Promise.reject(
-            new HttpError(
-              (err.response.data && err.response.data.errors[0]) || "Error",
-              err.response.data.status_code,
-              err.response.data
-            )
-          );
-        });
-    } else if (params.ids) {
-      let ResolvedRequests = await Promise.all(
-        params.ids.map((id) => {
-          return axios
-            .get(`${apiUrl}/api/place/${id}`, {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `${userData.token_type} ${userData.access_token}`,
-              },
-            })
-            .then((response) => {
-              return response.data;
-            });
-        })
-      );
-      // (ResolvedRequests);
-      return { data: ResolvedRequests };
-    }
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${userData.token_type} ${userData.access_token}`,
+        },
+      })
+      .then((response) => {
+        return {
+          data: response.data[0],
+        };
+      })
+      .catch((err) => {
+        return Promise.reject(
+          new HttpError(
+            (err.response.data && err.response.data.errors[0]) || "Error",
+            err.response.data.status_code,
+            err.response.data
+          )
+        );
+      });
   },
   async getMany(resource, params, apiUrl) {
-    console.log(params);
     let userData = JSON.parse(localStorage.getItem("auth"));
+
     let ResolvedRequests = await Promise.all(
       params.ids.map((id) => {
-        try {
-          return axios
-            .get(`${apiUrl}/api/place/${id}`, {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `${userData.token_type} ${userData.access_token}`,
+        return axios
+          .get(`${apiUrl}/api/tag`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${userData.token_type} ${userData.access_token}`,
+            },
+            params: {
+              filters: {
+                id: params.id,
               },
-            })
-            .then((response) => {
-              return response.data;
-            });
-        } catch (error) {
-          console.log(error);
-        }
+            },
+          })
+          .then((response) => {
+            return response.data[0];
+          });
       })
     );
-    // (ResolvedRequests);
+
     return { data: ResolvedRequests };
   },
   delete(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
 
     return axios
-      .delete(`${apiUrl}/api/place/${params.id}`, {
+      .delete(`${apiUrl}/api/tag/${params.id}`, {
+        // params:{},
         headers: {
           "Content-Type": "application/json",
           Authorization: `${userData.token_type} ${userData.access_token}`,
@@ -156,17 +121,33 @@ let dataProviderFunctions = {
   },
   create(resource, params, apiUrl) {
     let userData = JSON.parse(localStorage.getItem("auth"));
-
+    console.log(params);
     return axios
-      .post(`${apiUrl}/api/place`, params.data, {
+      .post(`${apiUrl}/api/notification/send`, params.data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${userData.token_type} ${userData.access_token}`,
         },
       })
       .then((response) => {
+        //function to generate random id
+        console.log({
+            ...params.data,
+            id: (() => {
+              const dateString = Date.now().toString(36);
+              const randomness = Math.random().toString(36).substr(2);
+              return dateString + randomness;
+            })(),
+          });
         return {
-          data: { ...params.data, id: response.data.id },
+          data: {
+            ...params.data,
+            id: (() => {
+              const dateString = Date.now().toString(36);
+              const randomness = Math.random().toString(36).substr(2);
+              return dateString + randomness;
+            })(),
+          },
         };
       })
       .catch((err) => {
@@ -183,7 +164,7 @@ let dataProviderFunctions = {
     let userData = JSON.parse(localStorage.getItem("auth"));
 
     return axios
-      .put(`${apiUrl}/api/place/${params.id}`, params.data, {
+      .put(`${apiUrl}/api/tag/${params.id}`, params.data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${userData.token_type} ${userData.access_token}`,
@@ -204,7 +185,6 @@ let dataProviderFunctions = {
         );
       });
   },
-  getManyReference(resource, params, apiUrl) {},
 };
 
 export default dataProviderFunctions;

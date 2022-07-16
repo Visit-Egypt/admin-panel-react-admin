@@ -6,12 +6,7 @@ import { User, UsersPageResponse } from "../types";
 
 let dataProviderFunctions = {
   async getList(resource: string, params: any, apiUrl: string) {
-    console.log(params);
-    console.log(
-      Object.entries(params.filter).map(([key, value]) => {
-        return { [key]: value };
-      })
-    );
+
 
     try {
       const { page, perPage } = params.pagination;
@@ -33,13 +28,11 @@ let dataProviderFunctions = {
           },
         }
       );
-      console.log(response);
       return {
         data: response.data.users,
         total: response.data.content_range,
       };
     } catch (error: any) {
-      console.log(error);
       if (error.response.status === 404) {
         return {
           data: [],
@@ -237,6 +230,8 @@ let dataProviderFunctions = {
       });
   },
   async getManyReference(resource: string, params: any, apiUrl: string) {
+    console.log(params);
+    
     let userData = JSON.parse(localStorage.getItem("auth") as string);
   },
 };
